@@ -23,13 +23,7 @@ const AcronymSearch: React.FC = () => {
     const loadAcronyms = () => {
       const acronymsDatabase = JSON.parse(JSON.stringify(acronymsData));
 
-      const uniqueAcronyms: Acronym[] = Array.from(
-        new Map(
-          acronymsDatabase.map((a: Acronym) => [a.acronym_id, a])
-        ).values()
-      ) as Acronym[];
-
-      setAcronyms(uniqueAcronyms);
+      setAcronyms(acronymsDatabase);
     };
 
     loadAcronyms();
@@ -87,7 +81,7 @@ const AcronymSearch: React.FC = () => {
           filteredAcronyms.map((acronym) => {
             const searchWords = searchTerm.toLowerCase().trim().split(/\s+/);
             return (
-              <div key={acronym.acronym_id} className="acronym-item">
+              <div key={acronym} className="acronym-item">
                 <p>
                   <strong>
                     {highlightMatch(acronym.abbreviation, searchWords)}
