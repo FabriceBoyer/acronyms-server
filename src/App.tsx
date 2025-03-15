@@ -24,7 +24,7 @@ const AcronymSearch: React.FC = () => {
       const acronymsDatabase = JSON.parse(JSON.stringify(acronymsData));
 
       setAcronyms(acronymsDatabase);
-      console.log(acronymsData.length + " acronyms loaded");
+      console.log(acronymsDatabase.length + " acronyms loaded");
     };
 
     loadAcronyms();
@@ -43,7 +43,7 @@ const AcronymSearch: React.FC = () => {
           )
         )
         .sort((a, b) => a.abbreviation.localeCompare(b.abbreviation)) // Sort alphabetically
-        .slice(0, 20); // Limit to 20 results
+        .slice(0, 100); // Limit results
       setFilteredAcronyms(filtered);
     } else {
       setFilteredAcronyms([]); // Clear results if less than 2 characters
@@ -77,7 +77,9 @@ const AcronymSearch: React.FC = () => {
       />
       <div className="acronym-list">
         {filteredAcronyms.length === 0 ? (
-          <p>No acronyms found.</p>
+          <div style={{ textAlign: "center" }}>
+            <p>No acronyms found</p>
+          </div>
         ) : (
           filteredAcronyms.map((acronym: Acronym) => {
             const searchWords = searchTerm.toLowerCase().trim().split(/\s+/);
