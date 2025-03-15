@@ -79,10 +79,15 @@ const AcronymSearch: React.FC = () => {
         {filteredAcronyms.length === 0 ? (
           <p>No acronyms found.</p>
         ) : (
-          filteredAcronyms.map((acronym) => {
+          filteredAcronyms.map((acronym: Acronym) => {
             const searchWords = searchTerm.toLowerCase().trim().split(/\s+/);
             return (
-              <div key={acronym} className="acronym-item">
+              <div
+                key={
+                  acronym.abbreviation + acronym.acronym_id + acronym.source_id
+                }
+                className="acronym-item"
+              >
                 <p>
                   <strong>
                     {highlightMatch(acronym.abbreviation, searchWords)}
