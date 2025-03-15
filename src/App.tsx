@@ -55,9 +55,24 @@ const AcronymSearch: React.FC = () => {
     }
   }, [searchTerm, acronyms]);
 
+  // Function to highlight matched words
+  const highlightMatch = (text: string, words: string[]) => {
+    if (!text) return text; // If no text, return as is
+    const regex = new RegExp(`(${words.join("|")})`, "gi"); // Create a regex from search words
+    return text.split(regex).map((part, index) =>
+      words.includes(part.toLowerCase()) ? (
+        <span key={index} className="highlight">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <div className="container">
-      <h1>NASA Acronyms Search</h1>
+      <h1>Acronyms Search</h1>
       <input
         type="text"
         placeholder="Search for an acronym"
@@ -69,14 +84,20 @@ const AcronymSearch: React.FC = () => {
         {filteredAcronyms.length === 0 ? (
           <p>No acronyms found.</p>
         ) : (
-          filteredAcronyms.map((acronym) => (
-            <div key={acronym.acronym_id} className="acronym-item">
-              <p>
-                <strong>{acronym.abbreviation}</strong> = {acronym.expansion} (
-                {acronym.source})
-              </p>
-            </div>
-          ))
+          filteredAcronyms.map((acronym) => {
+            const searchWords = searchTerm.toLowerCase().trim().split(/\s+/);
+            return (
+              <div key={acronym.acronym_id} className="acronym-item">
+                <p>
+                  <strong>
+                    {highlightMatch(acronym.abbreviation, searchWords)}
+                  </strong>{" "}
+                  = {highlightMatch(acronym.expansion, searchWords)} (
+                  {acronym.source})
+                </p>
+              </div>
+            );
+          })
         )}
       </div>
     </div>
