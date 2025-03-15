@@ -1,6 +1,6 @@
 {
   "name": "acronym_server",
-  "private": true,
+  "homepage": "https://FabriceBoyer.github.io/acronyms-server",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
