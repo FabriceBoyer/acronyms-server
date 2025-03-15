@@ -38,19 +38,17 @@ const AcronymSearch: React.FC = () => {
   // Filter acronyms as the user types in the search bar
   useEffect(() => {
     if (searchTerm.length >= 1) {
+      const words = searchTerm.toLowerCase().trim().split(/\s+/); // Split into words
       const filtered = acronyms
-        .filter(
-          (acronym) =>
-            acronym.abbreviation
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-            acronym.expansion
-              .toLowerCase()
-              .includes(searchTerm.toLowerCase()) ||
-            acronym.source.toLowerCase().includes(searchTerm.toLowerCase())
+        .filter((acronym) =>
+          words.every(
+            (word) =>
+              acronym.abbreviation.toLowerCase().includes(word) ||
+              acronym.expansion.toLowerCase().includes(word)
+          )
         )
+        .sort((a, b) => a.abbreviation.localeCompare(b.abbreviation)) // Sort alphabetically
         .slice(0, 20); // Limit to 20 results
-
       setFilteredAcronyms(filtered);
     } else {
       setFilteredAcronyms([]); // Clear results if less than 2 characters
