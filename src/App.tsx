@@ -24,6 +24,7 @@ const AcronymSearch: React.FC = () => {
       const acronymsDatabase = JSON.parse(JSON.stringify(acronymsData));
 
       setAcronyms(acronymsDatabase);
+      console.log(acronymsData.length + " acronyms loaded");
     };
 
     loadAcronyms();
