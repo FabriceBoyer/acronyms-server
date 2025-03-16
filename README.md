@@ -1,9 +1,11 @@
 # Acronyms server
 
-Data from [NASA-Acronyms](https://github.com/nasa/NASA-Acronyms)
+Data comes from [NASA-Acronyms](https://github.com/nasa/NASA-Acronyms) github repository
+
+Resulting application served on github pages at https://fabriceboyer.github.io/acronyms-server
+
+Project created with [vite](https://vite.dev/)
 
 Install with `npm install`
 
 Run with `npm run dev`
-
-Served on github pages at https://FabriceBoyer.github.io/acronyms-server
