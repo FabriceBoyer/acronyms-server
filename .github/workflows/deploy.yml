@@ -5,17 +5,15 @@ on:
     branches:
       - main # Deploy only when pushing to the main branch
 
-permissions:
-  contents: write
-
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
       # Step 1: Checkout the repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
@@ -34,8 +32,7 @@ jobs:
       # Step 5: Deploy to GitHub Pages
       # Don't forget the base path in vite.config.ts
       - name: Deploy to GitHub Pages
-        run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/FabriceBoyer/acronyms-server.git
-          npx gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
