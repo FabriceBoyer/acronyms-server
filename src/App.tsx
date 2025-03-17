@@ -74,6 +74,7 @@ const AcronymSearch: React.FC = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-bar"
+        autoFocus
       />
       <div className="acronym-list">
         {filteredAcronyms.length === 0 ? (
