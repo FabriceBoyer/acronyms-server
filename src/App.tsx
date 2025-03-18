@@ -39,8 +39,14 @@ const AcronymSearch: React.FC = () => {
       const abbreviations = acronyms.filter((acronym) =>
         words.every((word) => acronym.abbreviation.toLowerCase().includes(word))
       );
-      const expansions = acronyms.filter((acronym) =>
-        words.every((word) => acronym.expansion.toLowerCase().includes(word))
+      const expansions = acronyms.filter(
+        (acronym) =>
+          !abbreviations.includes(acronym) &&
+          words.every(
+            (word) =>
+              acronym.abbreviation.toLowerCase().includes(word) ||
+              acronym.expansion.toLowerCase().includes(word)
+          )
       );
       // abbreviations first
       const filtered = abbreviations.concat(expansions).slice(0, 100); // Limit results
