@@ -22,7 +22,9 @@ const AcronymSearch: React.FC = () => {
   useEffect(() => {
     const loadAcronyms = () => {
       const acronymsDatabase = JSON.parse(JSON.stringify(acronymsData));
-
+      acronymsDatabase.sort((a: Acronym, b: Acronym) =>
+        a.abbreviation.localeCompare(b.abbreviation)
+      ); // Sort alphabetically
       setAcronyms(acronymsDatabase);
       console.log(acronymsDatabase.length + " acronyms loaded");
     };
@@ -34,16 +36,14 @@ const AcronymSearch: React.FC = () => {
   useEffect(() => {
     if (searchTerm.length >= 1) {
       const words = searchTerm.toLowerCase().trim().split(/\s+/); // Split into words
-      const filtered = acronyms
-        .filter((acronym) =>
-          words.every(
-            (word) =>
-              acronym.abbreviation.toLowerCase().includes(word) ||
-              acronym.expansion.toLowerCase().includes(word)
-          )
-        )
-        .sort((a, b) => a.abbreviation.localeCompare(b.abbreviation)) // Sort alphabetically
-        .slice(0, 100); // Limit results
+      const abbreviations = acronyms.filter((acronym) =>
+        words.every((word) => acronym.abbreviation.toLowerCase().includes(word))
+      );
+      const expansions = acronyms.filter((acronym) =>
+        words.every((word) => acronym.expansion.toLowerCase().includes(word))
+      );
+      // abbreviations first
+      const filtered = abbreviations.concat(expansions).slice(0, 100); // Limit results
       setFilteredAcronyms(filtered);
     } else {
       setFilteredAcronyms([]); // Clear results if less than 2 characters
